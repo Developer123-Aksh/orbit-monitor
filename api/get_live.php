@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 // api/get_live.php - JSON endpoint for live telemetry and daemon status
 
 define('API_REQUEST', true);
@@ -121,3 +122,17 @@ try {
         'message' => 'Internal server error: ' . $e->getMessage()
     ]);
 }
+=======
+require_once '../auth.php'; // Protects this API endpoint
+$pdo = new PDO("mysql:host=localhost;dbname=scada_live_db", "root", "");
+
+// Fetch the most recent value for every active register
+$stmt = $pdo->query("
+    SELECT tag_address, tag_value 
+    FROM sensor_data 
+    WHERE id IN (SELECT MAX(id) FROM sensor_data GROUP BY tag_address)
+    ORDER BY tag_address ASC
+");
+echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+?>
+>>>>>>> 28b37767f32c545b0fd3633c89604c5adf1e3960

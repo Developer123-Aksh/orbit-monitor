@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 // auth.php - Session-based Authentication and Role-Based Access Control
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -49,3 +50,15 @@ function requireAdmin() {
 function isAdmin() {
     return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 }
+=======
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+// Helper to check for admin access for sensitive UI elements
+function is_admin() {
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+}
+?>
+>>>>>>> 28b37767f32c545b0fd3633c89604c5adf1e3960
